@@ -2,7 +2,8 @@ require_relative "blackjack_cards"
 require_relative "blackjack_deck"
 
 class Blackjack
-
+ # p_score is player score, dealer is computer, c_score is dealer or computer
+ 
 attr_accessor :player_hand, :computer_hand, :p_score, :c_score, :bjdeck, :shoe
 
   def initialize
