@@ -2,8 +2,8 @@ require_relative "blackjack_cards"
 require_relative "blackjack_deck"
 
 class Blackjack
- # p_score is player score, dealer is computer, c_score is dealer or computer
- 
+# p_score is player score, dealer is computer, c_score is dealer or computer
+#shoe didnt used it
 attr_accessor :player_hand, :computer_hand, :p_score, :c_score, :bjdeck, :shoe
 
   def initialize
@@ -17,8 +17,8 @@ attr_accessor :player_hand, :computer_hand, :p_score, :c_score, :bjdeck, :shoe
     self.player_hand = []
     self.computer_hand = []
   end
-
-
+# blind_score first round with one open computer( dealer) card.
+# game rules
   def play
     2.times {deal}
     blind_score
@@ -30,14 +30,14 @@ attr_accessor :player_hand, :computer_hand, :p_score, :c_score, :bjdeck, :shoe
     action
     end
   end
-
+# take a card - hit
   def deal
       hit = bjdeck.draw
       self.player_hand << hit
       hit = bjdeck.draw
       self.computer_hand << hit
     end
-
+# game itself : player turn
     def action
       if player_hand.collect{|x| x.value}.inject(:+) < 21 && player_hand.length == 6
         lengthwin
@@ -98,7 +98,7 @@ attr_accessor :player_hand, :computer_hand, :p_score, :c_score, :bjdeck, :shoe
         end
       end
     end
-
+# first round of game when one card is open
     def blind_score
       p_score = player_hand.collect{|x| x.value}.inject(:+)
       c_score = computer_hand.collect{|x| x.value}.inject(:+)
@@ -106,7 +106,7 @@ attr_accessor :player_hand, :computer_hand, :p_score, :c_score, :bjdeck, :shoe
       puts "The computer has #{computer_hand[1].face}#{computer_hand[1].suit} & [#]"
       puts " "
     end
-
+# next rounds of game
     def score
       p_score = player_hand.collect{|x| x.value}.inject(:+)
       c_score = computer_hand.collect{|x| x.value}.inject(:+)
@@ -114,32 +114,32 @@ attr_accessor :player_hand, :computer_hand, :p_score, :c_score, :bjdeck, :shoe
       puts "The computer has #{computer_hand.collect{|x| "#{x.face}#{x.suit}"}.join(" & ")}, for a total of #{c_score}"
       puts " "
     end
-
+# player win ln.78,ln.91,ln.96,
     def win
       puts "Congratulations, sir. You seem to have bested me."
       restart
     end
-
+# player win = 21 = Blackjack ln.26
     def bjwin
       puts "You have been dealt a Black Jack, sir. Congratulations. You win."
       restart
     end
-
+# 6 cards winner ln.42-43
     def lengthwin
       puts "You have six cards, and are under 21. Congratulations, you win."
       restart
     end
-
+# player lost, computer win = 21 = Blackjack ln.28
     def bjlose
       puts "I'm sorry, sir. I seem to have been dealt a Black Jack. I win."
       restart
     end
-
+# player lost, computer win ln.57,ln.84,ln.93
     def lose
       puts "I'm sorry, sir. You seem to have lost."
       restart
     end
-
+# new game
     def restart
       puts "Would you like to play again? (Yes or No)"
       answer = STDIN.gets.chomp.downcase
